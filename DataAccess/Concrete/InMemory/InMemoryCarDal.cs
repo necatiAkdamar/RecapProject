@@ -19,15 +19,15 @@ namespace DataAccess.Concrete.InMemory
             _car = new List<Car>
             {
                 new Car{Id=1, BrandId=1, ModelId=1, ColorId=1, ModelYear="2015",DailyPrice=200,Description="Güzel Araba 1"},
-                new Car{Id=2, BrandId=2, ModelId=1, ColorId=2, ModelYear="2018",DailyPrice=375,Description="Güzel Araba 2"},
-                new Car{Id=3, BrandId=3, ModelId=1, ColorId=3, ModelYear="2015",DailyPrice=150,Description="Güzel Araba 3"},
-                new Car{Id=4, BrandId=4, ModelId=1, ColorId=2, ModelYear="2019",DailyPrice=180,Description="Güzel Araba 4"},
-                new Car{Id=5, BrandId=1, ModelId=1, ColorId=2, ModelYear="2019",DailyPrice=210,Description="Güzel Araba 5"},
+                new Car{Id=2, BrandId=2, ModelId=3, ColorId=2, ModelYear="2018",DailyPrice=375,Description="Güzel Araba 2"},
+                new Car{Id=3, BrandId=3, ModelId=5, ColorId=3, ModelYear="2015",DailyPrice=150,Description="Güzel Araba 3"},
+                new Car{Id=4, BrandId=4, ModelId=7, ColorId=2, ModelYear="2019",DailyPrice=180,Description="Güzel Araba 4"},
+                new Car{Id=5, BrandId=4, ModelId=8, ColorId=2, ModelYear="2019",DailyPrice=210,Description="Güzel Araba 5"},
                 new Car{Id=6, BrandId=1, ModelId=2, ColorId=3, ModelYear="2016",DailyPrice=150,Description="Güzel Araba 6"},
-                new Car{Id=7, BrandId=2, ModelId=1, ColorId=3, ModelYear="2011",DailyPrice=280,Description="Güzel Araba 7"},
-                new Car{Id=8, BrandId=2, ModelId=2, ColorId=1, ModelYear="2011",DailyPrice=310,Description="Güzel Araba 8"},
-                new Car{Id=9, BrandId=3, ModelId=1, ColorId=1, ModelYear="2010",DailyPrice=120,Description="Güzel Araba 9"},
-                new Car{Id=10, BrandId=2,ModelId=2, ColorId=1, ModelYear="2012",DailyPrice=330,Description="Güzel Araba 10"}
+                new Car{Id=7, BrandId=2, ModelId=4, ColorId=3, ModelYear="2011",DailyPrice=280,Description="Güzel Araba 7"},
+                new Car{Id=8, BrandId=2, ModelId=3, ColorId=1, ModelYear="2011",DailyPrice=310,Description="Güzel Araba 8"},
+                new Car{Id=9, BrandId=3, ModelId=6, ColorId=1, ModelYear="2010",DailyPrice=120,Description="Güzel Araba 9"},
+                new Car{Id=10, BrandId=2,ModelId=4, ColorId=1, ModelYear="2012",DailyPrice=330,Description="Güzel Araba 10"}
             };
 
             _colors = new List<Color>
@@ -49,12 +49,12 @@ namespace DataAccess.Concrete.InMemory
             {
                 new Models{BrandId=1, ModelId=1, ModelName="Astra "},
                 new Models{BrandId=1, ModelId=2, ModelName="Corsa "},
-                new Models{BrandId=2, ModelId=1, ModelName="C180  "},
-                new Models{BrandId=2, ModelId=2, ModelName="B200  "},
-                new Models{BrandId=3, ModelId=1, ModelName="Megane"},
-                new Models{BrandId=3, ModelId=2, ModelName="Clio  "},
-                new Models{BrandId=4, ModelId=1, ModelName="Octavia"},
-                new Models{BrandId=4, ModelId=2, ModelName="Yeti  "}
+                new Models{BrandId=2, ModelId=3, ModelName="C180  "},
+                new Models{BrandId=2, ModelId=4, ModelName="B200  "},
+                new Models{BrandId=3, ModelId=5, ModelName="Megane"},
+                new Models{BrandId=3, ModelId=6, ModelName="Clio  "},
+                new Models{BrandId=4, ModelId=7, ModelName="Octavia"},
+                new Models{BrandId=4, ModelId=8, ModelName="Yeti  "}
             };
         }
 
@@ -74,7 +74,7 @@ namespace DataAccess.Concrete.InMemory
         {
             var araclar = (from arac in _car
                            join marka in _brands on arac.BrandId equals marka.BrandId
-                           join model in _models on marka.BrandId equals model.BrandId
+                           join model in _models on arac.ModelId equals model.ModelId
                            join renk in _colors on arac.ColorId equals renk.ColorId
 
                            select new

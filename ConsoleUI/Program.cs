@@ -11,11 +11,11 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new InMemoryCarDal());
-                        
-            //foreach (var color in carManager.GetColors())//Tüm Renkler
-            //{
-            //    Console.WriteLine($"Renk ID:{color.ColorId} = {color.ColorName}");
-            //}
+
+            foreach (var color in carManager.GetColors())//Tüm Renkler
+            {
+                Console.WriteLine($"Renk ID:{color.ColorId} = {color.ColorName}");
+            }
 
             foreach (var brand in carManager.GetBrands())//Tüm Markalar
             {
@@ -28,14 +28,14 @@ namespace ConsoleUI
             }
             Console.WriteLine("***********************************");
             
-            carManager.Add(new Car{ Id = 11, BrandId = 2, ModelId = 2, ColorId = 3, 
+            carManager.Add(new Car{ Id = 11, BrandId = 2, ModelId = 3, ColorId = 3, 
                 ModelYear = "2020", DailyPrice = 400, Description = "Yeni Güzel Mercedes"});//Araç Ekleme
 
             carManager.Update(new Car//Araç güncelleme
             {
                 Id = 11,
                 BrandId = 2,
-                ModelId = 2,
+                ModelId = 4,
                 ColorId = 3,
                 ModelYear = "1995",
                 DailyPrice = 50,
