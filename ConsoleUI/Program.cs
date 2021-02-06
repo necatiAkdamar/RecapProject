@@ -1,8 +1,10 @@
 ﻿using Business.Concrete;
 using DataAccess.Abstract;
-using DataAccess.Concrete.InMemory;
+using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete;
 using Entities.Concrete;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -10,44 +12,29 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
 
-            foreach (var color in carManager.GetColors())//Tüm Renkler
+            CarManager carManager = new CarManager(new EfCarDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+
+            Console.WriteLine("Brand Id'si 3 olan arabalar: \nId\tBrand Name\tColor Name\tModel Year\tDaily Price\tDescriptions");
+            foreach (var car in carManager.GetCarsByBrandId(3))
             {
-                Console.WriteLine($"Renk ID:{color.ColorId} = {color.ColorName}");
+                Console.WriteLine($"{car.Id}\t{brandManager.GetById(car.BrandId).BrandName}\t{colorManager.GetById(car.ColorId).ColorName}\t\t {car.ModelYear}\t {car.DailyPrice}\t {car.Description}");
             }
+            Console.WriteLine("*****************************");
 
-            foreach (var brand in carManager.GetBrands())//Tüm Markalar
+            Console.WriteLine("Color Id'si 2 olan arabalar: \nId\tBrand\t\tColor\tModel Year\tDaily Price\tDescriptions");
+            foreach (var car in carManager.GetCarsByColorId(2))
             {
-                Console.WriteLine($"Marka ID:{brand.BrandId} = {brand.BrandName}");
+                Console.WriteLine($"{car.Id}\t{brandManager.GetById(car.BrandId).BrandName}\t{colorManager.GetById(car.ColorId).ColorName}\t {car.ModelYear}\t {car.DailyPrice}\t {car.Description}");
             }
-            Console.WriteLine("***********************************");
-            foreach (var model in carManager.GetModels())//Tüm Modeller
+            Console.WriteLine("*****************************");
+            foreach (var c in brandManager.GetAll())
             {
-                Console.WriteLine($"Model ID:{model.ModelId} = {model.ModelName}");
+                Console.WriteLine(c.BrandName);
             }
-            Console.WriteLine("***********************************");
-            
-            carManager.Add(new Car{ Id = 11, BrandId = 2, ModelId = 3, ColorId = 3, 
-                ModelYear = "2020", DailyPrice = 400, Description = "Yeni Güzel Mercedes"});//Araç Ekleme
-
-            carManager.Update(new Car//Araç güncelleme
-            {
-                Id = 11,
-                BrandId = 2,
-                ModelId = 4,
-                ColorId = 3,
-                ModelYear = "1995",
-                DailyPrice = 50,
-                Description = "Güncellenen Güzel Mercedes"
-            });
-                        
-            carManager.Delete(5);//Araç Silme
-
-            Console.WriteLine("***********************************");
-
-            carManager.GetAll(); //LINQ join kullanarak tüm araçları listeleme.
-
             
         }
     }

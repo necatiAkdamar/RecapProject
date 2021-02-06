@@ -10,65 +10,54 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;//Dataaccess katmanında bulunan Abstract sınıfını kullanabilmek için buraya injection yapıyoruz.
+        ICarDal _carDal;
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
         }
 
-
         public void Add(Car car)
         {
-            _carDal.Add(car);
+            if (car.DailyPrice > 0)
+            {
+                _carDal.Add(car);
+                Console.WriteLine("Araba başarıyla eklendi.");
+            }
+            else
+            {
+                Console.WriteLine($"Lütfen günlük fiyat kısmını 0'dan büyük giriniz. Girdiğiniz değer : {car.DailyPrice}");
+            }
         }
 
-        public void Delete(int Id)
+        public void Delete(Car car)
         {
-            _carDal.Delete(Id);
+            _carDal.Delete(car);
         }
+
+        public List<Car> GetAll()
+        {
+            return _carDal.GetAll();
+        }
+
+        public Car GetById(int Id)
+        {
+          return _carDal.GetById(p => p.Id == Id);
+        }      
 
         public void Update(Car car)
         {
             _carDal.Update(car);
         }
 
-        public void GetAll()
+
+        public List<Car> GetCarsByBrandId(int brandId)
         {
-            _carDal.GetAll();
+            return _carDal.GetAll(p => p.BrandId == brandId);
         }
 
-
-        public List<Brand> GetBrands()
+        public List<Car> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetBrands();
+            return _carDal.GetAll(p => p.ColorId == colorId);
         }
-
-        public List<Car> GetByBrand(int brandId)
-        {
-            return _carDal.GetByBrand(brandId);
-        }
-
-        public List<Car> GetByColor(int colorId)
-        {
-            return _carDal.GetByColor(colorId);
-        }
-
-        public Car GetById(int Id)
-        {
-            return _carDal.GetById(Id);
-        }
-
-        public List<Color> GetColors()
-        {
-            return _carDal.GetColors();
-        }
-
-        public List<Models> GetModels()
-        {
-            return _carDal.GetModels();
-        }
-
-
-
     }
 }
