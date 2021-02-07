@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -34,6 +35,11 @@ namespace Business.Concrete
             _carDal.Delete(car);
         }
 
+        public void Update(Car car)
+        {
+            _carDal.Update(car);
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
@@ -41,14 +47,8 @@ namespace Business.Concrete
 
         public Car GetById(int Id)
         {
-          return _carDal.GetById(p => p.Id == Id);
-        }      
-
-        public void Update(Car car)
-        {
-            _carDal.Update(car);
+            return _carDal.GetById(p => p.Id == Id);
         }
-
 
         public List<Car> GetCarsByBrandId(int brandId)
         {
@@ -58,6 +58,11 @@ namespace Business.Concrete
         public List<Car> GetCarsByColorId(int colorId)
         {
             return _carDal.GetAll(p => p.ColorId == colorId);
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetailDtos();
         }
     }
 }
