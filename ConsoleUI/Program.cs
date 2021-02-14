@@ -14,44 +14,19 @@ namespace ConsoleUI
         {
 
             CarManager carManager = new CarManager(new EfCarDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            var result = carManager.GetCarDetails();
 
-            
-            Console.WriteLine("Brand Id'si 3 olan arabalar: \nId\tBrand Name\tColor Name\tModel Year\tDaily Price\tDescriptions");
-            foreach (var car in carManager.GetCarsByBrandId(3))
+            if (result.Success)
             {
-                Console.WriteLine($"{car.Id}\t{brandManager.GetById(car.BrandId).BrandName}\t{colorManager.GetById(car.ColorId).ColorName}\t\t {car.ModelYear}\t {car.DailyPrice}\t {car.Description}");
+                foreach (var car in carManager.GetCarDetails().Data)
+                {
+                    Console.WriteLine(car.BrandName + " / " + car.Description);
+                }
             }
-            Console.WriteLine("*****************************");
-
-            Console.WriteLine("Color Id'si 2 olan arabalar: \nId\tBrand\t\tColor\tModel Year\tDaily Price\tDescriptions");
-            foreach (var car in carManager.GetCarsByColorId(2))
+            else
             {
-                Console.WriteLine($"{car.Id}\t{brandManager.GetById(car.BrandId).BrandName}\t{colorManager.GetById(car.ColorId).ColorName}\t {car.ModelYear}\t {car.DailyPrice}\t {car.Description}");
+                Console.WriteLine(result.Message);
             }
-            Console.WriteLine("*****************************");
-
-            foreach (var c in brandManager.GetAll())
-            {
-                Console.WriteLine(c.BrandName);
-            }
-
-            Car car1 = new Car { BrandId = 2, ColorId = 2, DailyPrice = 255, ModelYear = "2019", Description = " Çok iyi yeni eklenen araba." };
-            carManager.Add(car1);
-
-            Console.WriteLine("*****************************");
-            foreach (var car in carManager.GetCarDetails())
-            {
-                Console.WriteLine("{0} / {1} / {2} / {3}",
-
-                        car.BrandName,
-                        car.ColorName,
-                        car.DailyPrice,
-                        car.Description
-                    );
-            }
-
 
 
         }
