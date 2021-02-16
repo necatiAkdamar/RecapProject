@@ -59,11 +59,11 @@ namespace ConsoleUI
             //    RentDate = DateTime.Now,
             //    ReturnDate = null
             //});
-            
+
 
             foreach (var item in rentalManager.GetRentalDetails().Data)
             {
-                Console.WriteLine(item.Id + "id'li " + item.CarDescription + " araç /" + item.UserName +" kiralama tarihi: "+ item.RentDate);
+                Console.WriteLine(item.Id + "id'li " + item.CarId + item.CarDescription + " araç /" + item.UserName +" kişiye kiralandı. Kiralama tarihi: "+ item.RentDate);
             }
 
         }
