@@ -1,6 +1,4 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,18 +11,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : ControllerBase
+    public class UserController : ControllerBase
     {
-        ICarService _carService;
-        public CarsController(ICarService carService)
+        IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            _carService = carService;
+            _userService = userService;
         }
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var result = _carService.GetAll();
+            var result = _userService.GetAll();
             if (result.Success)
             {
                 return Ok(result);//200 getrequest kodudur. Ok demektir.
@@ -35,7 +34,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetById")]
         public IActionResult GetById(int id)
         {
-            var result = _carService.GetById(id);
+            var result = _userService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,9 +43,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult Add(Car car)
+        public IActionResult Add(User user)
         {
-            var result = _carService.Add(car);
+            var result = _userService.Add(user);
             if (result.Success)
             {
                 return Ok(result);
@@ -55,9 +54,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update(Car car)
+        public IActionResult Update(User user)
         {
-            var result = _carService.Update(car);
+            var result = _userService.Update(user);
             if (result.Success)
             {
                 return Ok(result);
@@ -66,20 +65,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Delete")]
-        public IActionResult Delete(Car car)
+        public IActionResult Delete(User user)
         {
-            var result = _carService.Delete(car);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpGet("GetCarDetails")]
-        public IActionResult GetCarDetails()
-        {
-            var result = _carService.GetCarDetails();
+            var result = _userService.Delete(user);
             if (result.Success)
             {
                 return Ok(result);

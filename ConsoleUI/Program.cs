@@ -20,11 +20,10 @@ namespace ConsoleUI
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             var result = carManager.GetCarDetails();//Araçları listele
-
             foreach (var car in result.Data)
             {
-                Console.WriteLine(car.Id + " / " + car.BrandName + " / " + car.Description);
-            }
+                Console.WriteLine(car.Id + " --> " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
+            }            
             Console.WriteLine(carManager.GetCarDetails().Message);
 
 
@@ -61,10 +60,7 @@ namespace ConsoleUI
             //});
 
 
-            foreach (var item in rentalManager.GetRentalDetails().Data)
-            {
-                Console.WriteLine(item.Id + "id'li " + item.CarId + item.CarDescription + " araç /" + item.UserName +" kişiye kiralandı. Kiralama tarihi: "+ item.RentDate);
-            }
+      
 
         }
     }
