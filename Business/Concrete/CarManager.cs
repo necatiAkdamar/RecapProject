@@ -8,6 +8,10 @@ using System.Text;
 using Entities.DTOs;
 using Core.Utilities.Results;
 using Business.Constants;
+using FluentValidation;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -19,12 +23,14 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.Description.Length<5)
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
+            //business codes
+            //validation - doğrulama : Ekleme yapacağımız objenin yapısal özellikleri tanımlanır(min 2 karakter olsun gibi)
+            //FluentValidation olarak doğrulama kurallarını tek bir çatıda topluyoruz.
+            //crosscuttingconcern de oluşturduğumuz validationtool kullanarak doğrulama yaptık.CarValidator de car kuralları var.
+
             _carDal.Add(car);
             return new Result(true, Messages.CarAdded);
         }
