@@ -23,7 +23,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [ValidationAspect(typeof(CarValidator))]
+        [ValidationAspect(typeof(CarValidator))]//AOP ile oluşturduğumuz doğrulamaAspect ile Validate ettik.
         public IResult Add(Car car)
         {
             //business codes
@@ -32,7 +32,7 @@ namespace Business.Concrete
             //crosscuttingconcern de oluşturduğumuz validationtool kullanarak doğrulama yaptık.CarValidator de car kuralları var.
 
             _carDal.Add(car);
-            return new Result(true, Messages.CarAdded);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)

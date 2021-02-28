@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Business.DependencyResolvers.Autofac
 {
-    public class AutofacBusinessModule : Module
+    public class AutofacBusinessModule : Module //Instance oluşturacak modülümüz
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -30,6 +30,9 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<BrandManager>().As<IBrandService>().SingleInstance();
             builder.RegisterType<EfBrandDal>().As<IBrandDal>().SingleInstance();
+
+            builder.RegisterType<CarImagesManager>().As<ICarImagesService>().SingleInstance();
+            builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
